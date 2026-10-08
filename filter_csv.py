@@ -22,6 +22,17 @@ def main():
     #   header. Find the position of args.column within the header, then print every
     #   data row (its values joined by commas) whose value in that column equals
     #   args.value.
+    with open(args.filename) as f:
+        reader = csv.reader(f)
+        header = next(reader)
+        if args.column not in header:
+            print(f"Error: column '{args.column}' not found.")
+            return
+        col_idx = header.index(args.column)
+        for row in reader:
+            if row[col_idx] == args.value:
+                print(",".join(row))
+    
 
 
 if __name__ == "__main__":
